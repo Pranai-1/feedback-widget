@@ -1,6 +1,6 @@
 {
-  "name": "pack-to-ui",
-  "version": "1.0.3",
+  "name": "feedback.io-widget",
+  "version": "1.3.0",
   "type": "module",
   "description": "",
   "main": "dist/index.js",

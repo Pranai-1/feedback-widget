@@ -1,27 +1,22 @@
-
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 
-
-  function FeedbackWidget({pageName,spaceName}:{pageName:string,spaceName:string}) {
-
-  const iframeRef = useRef<any>(null);
-  const [loading, setLoading] = useState(true); // ✅ Loading state
-
-
+function FeedbackWidget({ pageName, spaceName }: { pageName: string; spaceName: string }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
 
     const handleLoad = () => {
-      setLoading(false); // ✅ Hide loader when content loads
+      setLoading(false);
       if (window.iFrameResize) {
         window.iFrameResize(
           {
-            log: false,
-            checkOrigin: ["https://feedback-io-xi.vercel.app"],
-            heightCalculationMethod: "max",
+            log: true, // Enable logs for debugging
+            checkOrigin: false, // Allow local development
+            heightCalculationMethod: "bodyScroll", // Alternative: "documentElementScroll"
           },
           iframe
         );
@@ -40,52 +35,18 @@ import { useEffect, useRef, useState } from "react";
 
   return (
     <div style={{ position: "relative" }}>
-      {/* ✅ Show loading screen until iframe loads */}
-      {loading && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "black",
-            color: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "18px",
-            fontWeight: "bold",
-            gap: "24px",
-          }}
-        >
-          {[...Array(window.innerWidth < 640 ? 1 : 3)].map((_, index) => (
-            <div
-              key={index}
-              style={{
-                backgroundColor: "#E5E7EB",
-                height: "80%",
-                width: window.innerWidth < 640 ? "50%" : "25%",
-                borderRadius: "0.375rem",
-                animation: "pulse 1.5s infinite ease-in-out",
-              }}
-            ></div>
-          ))}
-        </div>
-      )}
+      {loading && <p>Loading...</p>}
       <iframe
         ref={iframeRef}
-        src={`https://feedback-io-xi.vercel.app/${pageName}/${spaceName}`}
+        src={`http://localhost:3000/slider/Feedback.io`}
         style={{
-          border: "none",
-          minHeight: window.innerWidth < 640 ? "400px" : "500px",
+          height: "350px", // Ensure it expands fully
           width: "100%",
-          display: "block",
+          backgroundColor: "black",
         }}
       />
     </div>
   );
 }
 
-
-export {FeedbackWidget}
+export { FeedbackWidget };
