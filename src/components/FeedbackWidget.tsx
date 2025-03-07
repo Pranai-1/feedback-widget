@@ -38,7 +38,7 @@ function FeedbackWidget({ pageName, spaceName }: { pageName: string; spaceName: 
       {loading && <p>Loading...</p>}
       <iframe
         ref={iframeRef}
-        src={`http://localhost:3000/slider/Feedback.io`}
+        src={`https://feedback-io-xi.vercel.app/${pageName}/${spaceName}`}
         style={{
           height: "350px", // Ensure it expands fully
           width: "100%",
